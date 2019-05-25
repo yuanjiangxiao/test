@@ -1,0 +1,90 @@
+server:
+  port: 9011
+
+spring:
+  datasource:
+    name: dev_db
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+#      driver-class-label: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://127.0.0.1:3306/cmbdb?characterEncoding=UTF-8&serverTimezone=UTC
+#      driver-class-name: oracle.jdbc.OracleDriver
+#      url: jdbc:oracle:thin:@39.100.80.137:63211:orcl
+      driver-class-name: oracle.jdbc.OracleDriver
+      url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+#      username: crmis
+#      password: crmis
+      username: crmis
+      password: crmis
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      #获取连接等待超时时间
+      max-wait: 60000
+      #间隔多久进行一次检测，检测需要关闭的空闲连接
+      time-between-eviction-runs-millis: 60000
+      #一个连接在池中最小生存的时间
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT * FROM DUAL   #oracle
+#      validation-query: select 1  #mysql
+#      validation-query: select 1  #Microsoft SQL Server
+#      validation-query: select 1 from sysibm.sysdummy1 #DB2
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+
+  mail:
+    host: smtp.qq.com
+    username: gaofeng@foxmail.com
+    password: tyajjgsfemctcadc
+  redis:
+    database: 0
+    host: 192.168.137.124
+    port: 6379
+    password: a12345b
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1   #负值表示没有限制
+        min-idle: 0
+    timeout: 200
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      exclude: WEB-INF/**
+
+#kafka:
+#   bootstrap-servers: 192.168.1.9:9092,192.168.1.10:9092,192.168.1.11:9092
+#   producer:
+#      retries: 0
+#      batch-size: 16384
+#      buffer-memory: 33554432
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#    consumer:
+#      group-id: quasimodo-consumer-group
+#      auto-offset-reset: earliest
+#      enable-auto-commit: true
+#     auto-commit-interval: 100
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+logging:
+  level:
+    com.abc.webapp : debug
+    org.springframework.data.redis : debug
+  config: classpath:logging-config.xml
+
+
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+pagehelper:
+  helper-dialect: oracle
+  offset-as-page-num: true,
+  row-bounds-with-count: true,
+  reasonable: true
